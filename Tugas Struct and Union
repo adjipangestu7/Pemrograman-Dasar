@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct studentType {
+    string studentFName;
+    string studentLName;
+    int    testScore;
+    char   grade;
+};
+
+const int NUM_STUDENTS = 20;
+
+void studentData(studentType s[], int n) {
+    cout << "Masukkan data " << n << " mahasiswa:\n";
+    for (int i = 0; i < n; ++i) {
+        cout << i + 1 << ". ";
+        cin >> s[i].studentFName >> s[i].studentLName >> s[i].testScore;
+    }
+}
+
+void assignGrade(studentType s[], int n) {
+    for (int i = 0; i < n; ++i) {
+        int sc = s[i].testScore;
+        if      (sc >= 90) s[i].grade = 'A';
+        else if (sc >= 80) s[i].grade = 'B';
+        else if (sc >= 70) s[i].grade = 'C';
+        else if (sc >= 60) s[i].grade = 'D';
+        else               s[i].grade = 'F';
+    }
+}
+
+int highestScore(const studentType s[], int n) {
+    int highest = s[0].testScore;
+    for (int i = 1; i < n; ++i)
+        if (s[i].testScore > highest)
+            highest = s[i].testScore;
+    return highest;
+}
+
+void printData(const studentType s[], int n) {
+    cout << "\nNama Mahasiswa\t\tNilai\tGrade\n";
+    cout << "--------------------------------------\n";
+    for (int i = 0; i < n; ++i) {
+        cout << s[i].studentLName << ", " << s[i].studentFName
+             << "\t\t" << s[i].testScore
+             << "\t" << s[i].grade << endl;
+    }
+}
+
+void printHighest(const studentType s[], int n, int highest) {
+    for (int i = 0; i < n; ++i) {
+        if (s[i].testScore == highest)
+            cout << "\nNilai tertinggi: " << highest << " - " << s[i].studentLName << ", " << s[i].studentFName << endl;
+    }
+}
+
+int main() {
+    studentType students[NUM_STUDENTS];
+
+    studentData(students, NUM_STUDENTS);
+    assignGrade(students, NUM_STUDENTS);
+    printData(students, NUM_STUDENTS);
+
+    int highest = highestScore(students, NUM_STUDENTS);
+    printHighest(students, NUM_STUDENTS, highest);
+
+    return 0;
+}
